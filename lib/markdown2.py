@@ -1949,8 +1949,9 @@ class Markdown(object):
         colored = self._color_with_pygments(codeblock, lexer,
                                             **formatter_opts)
 
-        # add back the indent to all lines
-        return "\n%s\n" % self._uniform_indent(colored, leading_indent, True)
+        hashed = _hash_text(colored)
+        self._code_table[colored] = hashed
+        return "\n%s%s\n" % (leading_indent, hashed)
 
     def _html_class_str_from_tag(self, tag):
         """Get the appropriate ' class="..."' string (note the leading
